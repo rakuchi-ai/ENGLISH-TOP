@@ -3,98 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>英語学習用アプリポータル</title>
+    <title>English Learning Portal</title>
     <style>
         :root {
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(255, 255, 255, 0.8);
             --text-main: #1e293b;
             --text-sub: #64748b;
             --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --border-color: #e2e8f0;
-            --radius: 12px;
+            --shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 20px 40px 0 rgba(59, 130, 246, 0.15);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-gradient: linear-gradient(135deg, #0f172a 1-%, #1e293b 100%);
+                --card-bg: rgba(30, 41, 59, 0.65);
+                --card-border: rgba(255, 255, 255, 0.1);
+                --text-main: #f8fafc;
+                --text-sub: #94a3b8;
+                --primary: #60a5fa;
+                --shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
+                --hover-shadow: 0 20px 40px 0 rgba(96, 165, 250, 0.2);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
-            padding: 40px 20px;
+            padding: 50px 20px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            min-height: 100vh;
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1050px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 0 0 8px 0;
-            letter-spacing: -0.025em;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-main), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         p.subtitle {
             color: var(--text-sub);
-            font-size: 0.95rem;
+            font-size: 1rem;
             margin: 0;
+            font-weight: 500;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
         }
 
         .card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 24px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            box-shadow: var(--shadow);
             text-decoration: none;
             color: inherit;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
             border-color: var(--primary);
         }
 
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
         .card-title {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin: 0 0 16px 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
             color: var(--text-main);
+            line-height: 1.4;
         }
 
         .card-footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.875rem;
-            font-weight: 500;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: var(--primary);
+            padding-top: 15px;
+            border-top: 1px solid rgba(100, 116, 139, 0.15);
         }
 
         .card-footer span {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             transition: transform 0.2s ease;
         }
 
@@ -104,8 +150,8 @@
 
         footer.site-footer {
             text-align: center;
-            margin-top: 50px;
-            font-size: 0.8rem;
+            margin-top: 60px;
+            font-size: 0.85rem;
             color: var(--text-sub);
         }
     </style>
@@ -114,14 +160,19 @@
 
     <div class="container">
         <header>
-            <h1>英語学習用アプリポータル</h1>
-            <p class="subtitle">暁星高校英語科</p>
+            <h1>English Learning Hub</h1>
+            <p class="subtitle">English Department Portal & Application Launcher</p>
         </header>
 
         <div class="grid">
             <!-- ① 前置詞強化 -->
             <a href="https://rakuchi-ai.github.io/Preposition100/" class="card">
-                <h2 class="card-title">前置詞強化</h2>
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">前置詞強化</h2>
+                        <div class="card-icon">📌</div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <span>アプリを開く</span> &rarr;
                 </div>
@@ -129,7 +180,12 @@
 
             <!-- ② 接続詞強化 -->
             <a href="https://rakuchi-ai.github.io/conjunction100/" class="card">
-                <h2 class="card-title">接続詞強化</h2>
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">接続詞強化</h2>
+                        <div class="card-icon">🔗</div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <span>アプリを開く</span> &rarr;
                 </div>
@@ -137,7 +193,12 @@
 
             <!-- ③ 入門英文問題精講フラッシュカード -->
             <a href="https://rakuchi-ai.github.io/Nyumon-Eibun/" class="card">
-                <h2 class="card-title">入門英文問題精講フラッシュカード</h2>
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">入門英文問題精講フラッシュカード</h2>
+                        <div class="card-icon">⚡</div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <span>アプリを開く</span> &rarr;
                 </div>
@@ -145,7 +206,12 @@
 
             <!-- ④ イディオム500 -->
             <a href="https://rakuchi-ai.github.io/idiom500/" class="card">
-                <h2 class="card-title">イディオム500</h2>
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">イディオム500</h2>
+                        <div class="card-icon">💡</div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <span>アプリを開く</span> &rarr;
                 </div>
@@ -153,7 +219,12 @@
 
             <!-- ⑤ 英文法教室 -->
             <a href="https://rakuchi-ai.github.io/Eibunpo-Kyoshitsu/" class="card">
-                <h2 class="card-title">英文法教室</h2>
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">英文法教室</h2>
+                        <div class="card-icon">📖</div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <span>アプリを開く</span> &rarr;
                 </div>
@@ -161,15 +232,25 @@
 
             <!-- ⑥ 正誤問題強化100 -->
             <a href="https://rakuchi-ai.github.io/Error-Recognition/" class="card">
-                <h2 class="card-title">正誤問題強化100</h2>
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">正誤問題強化100</h2>
+                        <div class="card-icon">🎯</div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <span>アプリを開く</span> &rarr;
                 </div>
             </a>
 
-            <!-- 中級整序問題 -->
+            <!-- ⑦ 中級整序問題 -->
             <a href="https://rakuchi-ai.github.io/WordOrder20/" class="card">
-                <h2 class="card-title">中級整序問題</h2>
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">中級整序問題</h2>
+                        <div class="card-icon">✍️</div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <span>アプリを開く</span> &rarr;
                 </div>
@@ -177,7 +258,7 @@
         </div>
 
         <footer class="site-footer">
-            &copy; Makoto Kitamura
+            &copy; English Learning Hub
         </footer>
     </div>
 
